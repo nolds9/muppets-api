@@ -1,0 +1,7 @@
+# test muppets
+one:
+  name: kermit
+  image_url: kermit.jpg
+two:
+  name: gonzo
+  image_url: gonzo.jpg

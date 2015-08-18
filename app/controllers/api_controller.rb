@@ -1,23 +1,23 @@
 class ApiController < ApplicationController
-protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session
+
   def index
-   render :json => Muppet.all
+    @muppets = Muppet.all
+    render :json => @muppets
   end
 
   def show
     @muppet = Muppet.find(params[:id])
-    respond_to do |format|
-      format.json {render :json => @muppet }
-      format.html {render }
-
+    render :json => @muppet
   end
 
   def create
     @muppet = Muppet.new(muppet_params)
+
     if @muppet.save
       render :json => @muppet
     else
-      render :json => { :error => @muppet.errors.full_messages }, :status => 418
+      render :json => { :errors => @muppet.errors.full_messages }, :status => 422
     end
   end
 
@@ -40,11 +40,9 @@ protect_from_forgery with: :null_session
     end
   end
 
-
   private
 
   def muppet_params
     params.permit(:name, :image_url)
   end
-
 end
